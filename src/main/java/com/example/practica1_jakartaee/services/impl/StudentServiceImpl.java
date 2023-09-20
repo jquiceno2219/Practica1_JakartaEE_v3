@@ -1,6 +1,7 @@
 package com.example.practica1_jakartaee.services.impl;
 
 import com.example.practica1_jakartaee.domain.model.Student;
+import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 
@@ -13,17 +14,17 @@ public class StudentServiceImpl implements StudentService {
         this.repository = repository;
     }
     @Override
-    public List<Student> listar() {
+    public List<StudentDto> listar() {
         return repository.listar();
     }
 
     @Override
-    public Student porId(Long id) {
+    public StudentDto porId(Long id) {
         return repository.porId(id);
     }
 
     @Override
-    public void guardar(Student t) {
+    public void guardar(StudentDto t) {
         repository.guardar(t);
     }
 

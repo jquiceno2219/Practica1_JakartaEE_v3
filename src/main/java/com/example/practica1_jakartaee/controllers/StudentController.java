@@ -5,6 +5,7 @@ import java.io.*;
 
 import com.example.practica1_jakartaee.domain.enums.Career;
 import com.example.practica1_jakartaee.domain.model.Student;
+import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
@@ -47,7 +48,7 @@ public class StudentController extends HttpServlet {
 
         String name = req.getParameter("name");
         String career = req.getParameter("career");
-        Student student = new Student(4L, name, "1",Career.fromValue(career));
+        StudentDto student = new StudentDto(4L, name, "1",Career.fromValue(career));
         service.guardar(student);
         System.out.println(service.listar());
 

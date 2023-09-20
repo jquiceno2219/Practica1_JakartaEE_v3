@@ -9,13 +9,11 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Estudiantes</a>
-
 <a href="student.jsp">Vamos a StudentForm</a>
 <br/>
-<a href="subject.jsp"Vamos a SubjectForm</a>
+<a href="subject.jsp">Vamos a SubjectForm</a>
 <br/>
-<a href="teacher.jsp"Vamos a teacherForm</a>
+<a href="teacher.jsp">Vamos a teacherForm</a>
 <br/>
-<a href="teacher.jsp"Test de Github</a>
 </body>
 </html>

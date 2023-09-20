@@ -1,4 +1,4 @@
-package com.example.practica1_jakartaee;
+package com.example.practica1_jakartaee.controllers;
 
 import java.io.*;
 
