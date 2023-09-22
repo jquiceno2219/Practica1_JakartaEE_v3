@@ -28,7 +28,7 @@ public class StudentXLS extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-        List<StudentDto> students = service.listar();
+        List<StudentDto> students = service.list();
         resp.setContentType("text/html;charset=UTF-8");
         String servletPath = req.getServletPath();
         boolean esXls = servletPath.endsWith(".xls");

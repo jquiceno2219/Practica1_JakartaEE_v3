@@ -1,7 +1,7 @@
 package com.example.practica1_jakartaee.controllers;
 
 
-import com.example.practica1_jakartaee.domain.model.Teacher;
+import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.repositories.impl.TeacherRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.impl.TeacherServiceImpl;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,7 @@ public class TeacherController extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Teachers</h1>");
-        out.println(service.listar());
+        out.println(service.list());
         out.println("</body></html>");
     }
 
@@ -46,9 +46,9 @@ public class TeacherController extends HttpServlet {
 
         String name = req.getParameter("name");
         String email = req.getParameter("email");
-        Teacher teacher = new Teacher(4L, name, email);
-        service.guardar(teacher);
-        System.out.println(service.listar());
+        TeacherDto teacher = new TeacherDto(4L, name, email);
+        service.save(teacher);
+        System.out.println(service.list());
 
         try (PrintWriter out = resp.getWriter()) {
 

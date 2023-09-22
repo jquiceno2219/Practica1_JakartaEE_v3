@@ -1,15 +1,15 @@
 package com.example.practica1_jakartaee.services;
 
-import com.example.practica1_jakartaee.domain.model.Teacher;
+import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 
 import java.util.List;
 
 public interface TeacherService {
-    List<Teacher> listar();
+    List<TeacherDto> list();
 
-    Teacher porId(Long id);
+    TeacherDto findById(Long id);
 
-    void guardar(Teacher t);
+    void save(TeacherDto t);
 
-    void eliminar(Long id);
+    void delete(Long id);
 }

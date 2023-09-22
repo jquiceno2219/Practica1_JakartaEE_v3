@@ -4,9 +4,7 @@ package com.example.practica1_jakartaee.controllers;
 import java.io.*;
 
 import com.example.practica1_jakartaee.domain.enums.Career;
-import com.example.practica1_jakartaee.domain.model.Student;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
-import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
@@ -38,7 +36,7 @@ public class StudentController extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Students</h1>");
-        out.println(service.listar());
+        out.println(service.list());
         out.println("</body></html>");
     }
 
@@ -49,8 +47,8 @@ public class StudentController extends HttpServlet {
         String name = req.getParameter("name");
         String career = req.getParameter("career");
         StudentDto student = new StudentDto(4L, name, "1",Career.fromValue(career));
-        service.guardar(student);
-        System.out.println(service.listar());
+        service.save(student);
+        System.out.println(service.list());
 
         try (PrintWriter out = resp.getWriter()) {
 

@@ -31,8 +31,3 @@
 
 </body>
 </html>
-
-
-//long.valueof . getparameterofid
-
-wtwrtwt

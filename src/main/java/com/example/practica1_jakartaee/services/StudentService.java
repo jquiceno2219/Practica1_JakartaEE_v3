@@ -1,16 +1,15 @@
 package com.example.practica1_jakartaee.services;
 
-import com.example.practica1_jakartaee.domain.model.Student;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 
 import java.util.List;
 
 public interface StudentService {
-    List<StudentDto> listar();
+    List<StudentDto> list();
 
-    StudentDto porId(Long id);
+    StudentDto findById(Long id);
 
-    void guardar(StudentDto t);
+    void save(StudentDto t);
 
-    void eliminar(Long id);
+    void delete(Long id);
 }

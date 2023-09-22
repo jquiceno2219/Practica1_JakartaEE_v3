@@ -16,5 +16,7 @@
 <a href="teacher.jsp">Vamos a teacherForm</a>
 <br/>
 <a href="login.jsp">Vamos a login</a>
+<br/>
+<a href="searchbyId.jsp">Ir a studentId</a>
 </body>
 </html>

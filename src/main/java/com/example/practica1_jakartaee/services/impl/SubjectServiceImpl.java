@@ -1,6 +1,6 @@
 package com.example.practica1_jakartaee.services.impl;
 
-import com.example.practica1_jakartaee.domain.model.Subject;
+import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 import com.example.practica1_jakartaee.repositories.impl.SubjectRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.SubjectService;
 
@@ -12,22 +12,22 @@ public class SubjectServiceImpl implements SubjectService {
         this.repository = repository;
     }
     @Override
-    public List<Subject> listar() {
-        return repository.listar();
+    public List<SubjectDto> list() {
+        return repository.list();
     }
 
     @Override
-    public Subject porId(Long id) {
-        return repository.porId(id);
+    public SubjectDto findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
-    public void guardar(Subject t) {
-        repository.guardar(t);
+    public void save(SubjectDto t) {
+        repository.save(t);
     }
 
     @Override
-    public void eliminar(Long id) {
-        repository.eliminar(id);
+    public void delete(Long id) {
+        repository.delete(id);
     }
 }

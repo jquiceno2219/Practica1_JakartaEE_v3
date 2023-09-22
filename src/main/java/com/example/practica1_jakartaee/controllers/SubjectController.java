@@ -1,7 +1,7 @@
 package com.example.practica1_jakartaee.controllers;
 
-import com.example.practica1_jakartaee.domain.model.Subject;
 import com.example.practica1_jakartaee.domain.model.Teacher;
+import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 import com.example.practica1_jakartaee.repositories.impl.SubjectRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.impl.SubjectServiceImpl;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,7 @@ public class SubjectController extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Students</h1>");
-        out.println(service.listar());
+        out.println(service.list());
         out.println("</body></html>");
     }
 
@@ -45,9 +45,9 @@ public class SubjectController extends HttpServlet {
         resp.setContentType("text/html");
 
         String name = req.getParameter("name");
-        Subject subject = new Subject(4L, name, new Teacher(5L,"Test", "Test@mail.com"));
-        service.guardar(subject);
-        System.out.println(service.listar());
+        SubjectDto subject = new SubjectDto(4L, name, new Teacher(5L,"Test", "Test@mail.com"));
+        service.save(subject);
+        System.out.println(service.list());
 
         try (PrintWriter out = resp.getWriter()) {
 

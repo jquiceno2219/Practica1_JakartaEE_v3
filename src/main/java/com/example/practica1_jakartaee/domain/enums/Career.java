@@ -10,7 +10,7 @@ public enum Career {
     SOFTWARE("Software"),
     CIVIL("Civil"),
     INDUSTRIAL("Industrial"),
-    ADMINISTRACION("Administracion")
+    ADMINISTRATION("Administration")
     ;
 
     Career(String value) {

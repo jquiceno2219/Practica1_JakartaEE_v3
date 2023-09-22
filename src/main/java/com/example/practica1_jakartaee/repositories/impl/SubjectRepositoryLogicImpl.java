@@ -3,42 +3,44 @@ package com.example.practica1_jakartaee.repositories.impl;
 import com.example.practica1_jakartaee.domain.model.Subject;
 import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.exceptions.UniversityException;
+import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
+import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 import com.example.practica1_jakartaee.repositories.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectRepositoryLogicImpl implements Repository<Subject> {
-    private List<Subject> subjects;
+public class SubjectRepositoryLogicImpl implements Repository<SubjectDto> {
+    private List<SubjectDto> subjects;
     TeacherRepositoryLogicImpl teacherLog = new TeacherRepositoryLogicImpl();
 
     public SubjectRepositoryLogicImpl(){
-        Subject s1 = new Subject(1L, "Mate", new Teacher(1L, "Mónica", "Mónica@mail.com"));
-        Subject s2 = new Subject(1L, "Programación", new Teacher(2L, "Arle", "Arle@mail.com"));
-        Subject s3 = new Subject(1L, "Ciencias", new Teacher(3L, "Javier", "Javier@mail.com"));
+        SubjectDto s1 = new SubjectDto(1L, "Mate", new Teacher(1L, "Mónica", "Mónica@mail.com"));
+        SubjectDto s2 = new SubjectDto(1L, "Programación", new Teacher(2L, "Arle", "Arle@mail.com"));
+        SubjectDto s3 = new SubjectDto(1L, "Ciencias", new Teacher(3L, "Javier", "Javier@mail.com"));
         subjects = new ArrayList<>(List.of(s1,s2,s3));
     }
 
     @Override
-    public List<Subject> listar() {
+    public List<SubjectDto> list() {
         return subjects;
     }
 
     @Override
-    public Subject porId(Long id) {
+    public SubjectDto findById(Long id) {
         return subjects.stream()
-                .filter(e->id.equals(e.getId()))
+                .filter(e->id.equals(e.id()))
                 .findFirst()
                 .orElseThrow(()-> new UniversityException("Subject not found"));
     }
 
     @Override
-    public void guardar(Subject subject) {
+    public void save(SubjectDto subject) {
         subjects.add(subject);
     }
 
     @Override
-    public void eliminar(Long id) {
-        subjects.removeIf(e->e.getId().equals(id));
+    public void delete(Long id) {
+        subjects.removeIf(e->e.id().equals(id));
     }
 }

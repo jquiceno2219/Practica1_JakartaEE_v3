@@ -1,15 +1,15 @@
 package com.example.practica1_jakartaee.services;
 
-import com.example.practica1_jakartaee.domain.model.Subject;
+import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 
 import java.util.List;
 
 public interface SubjectService {
-    List<Subject> listar();
+    List<SubjectDto> list();
 
-    Subject porId(Long id);
+    SubjectDto findById(Long id);
 
-    void guardar(Subject t);
+    void save(SubjectDto t);
 
-    void eliminar(Long id);
+    void delete(Long id);
 }

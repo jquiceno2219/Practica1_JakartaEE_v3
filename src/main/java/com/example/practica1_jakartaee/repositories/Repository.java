@@ -3,11 +3,11 @@ package com.example.practica1_jakartaee.repositories;
 import java.util.List;
 
 public interface Repository <T>{
-    List<T> listar();
+    List<T> list();
 
-    T porId(Long id);
+    T findById(Long id);
 
-    void guardar(T t);
+    void save(T t);
 
-    void eliminar(Long id);
+    void delete(Long id);
 }
