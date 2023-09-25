@@ -1,5 +1,6 @@
 package com.example.practica1_jakartaee.repositories.impl;
 import com.example.practica1_jakartaee.domain.model.Student;
+import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.mapping.mappers.StudentMapper;
 import com.example.practica1_jakartaee.repositories.Repository;
@@ -27,13 +28,13 @@ public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
                 students.add(ps);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceJdbcException("Error recovering information from database");
         }
         return StudentMapper.mapFrom(students);
     }
 
-    private Student getStudent(ResultSet rs) {
-
+    private StudentDto getStudent(ResultSet rs) {
+        return null;
     }
 
     @Override

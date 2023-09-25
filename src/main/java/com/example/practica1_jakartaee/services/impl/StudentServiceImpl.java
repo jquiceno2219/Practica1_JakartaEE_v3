@@ -1,32 +1,21 @@
 package com.example.practica1_jakartaee.services.impl;
 
-import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
-import com.example.practica1_jakartaee.repositories.Repository;
-import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
-    private Repository<StudentDto> studentRepository;
-    public StudentServiceImpl(Connection connection) {
-        this.studentRepository = new StudentRepositoryJdbcImpl(connection);
-    }
+    private final StudentRepositoryLogicImpl repository;
 
+    public StudentServiceImpl(StudentRepositoryLogicImpl repository) {
+        this.repository = repository;
+    }
     @Override
     public List<StudentDto> list() {
-        try {
-            return studentRepository.list();
-        } catch (SQLException throwables) {
-            throw new ServiceJdbcException(throwables.getMessage(),
-                    throwables.getCause());
-        }
+        return repository.list();
     }
-
 
     @Override
     public StudentDto findById(Long id) {
