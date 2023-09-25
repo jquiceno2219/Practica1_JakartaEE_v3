@@ -23,10 +23,10 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
-          /*  Cookie usernameCookie = new Cookie("username", username);
+          Cookie usernameCookie = new Cookie("username", username);
             resp.addCookie(usernameCookie);
             resp.sendRedirect(req.getContextPath() + "/login.html");
-            */
+
 
             resp.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = resp.getWriter()) {

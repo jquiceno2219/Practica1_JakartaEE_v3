@@ -1,6 +1,5 @@
 package com.example.practica1_jakartaee.repositories.impl;
 
-import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.exceptions.UniversityException;
 import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.repositories.Repository;
