@@ -33,7 +33,7 @@ public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
         return StudentMapper.mapFrom(students);
     }
 
-    private StudentDto getStudent(ResultSet rs) {
+    private Student getStudent(ResultSet rs) {
         return null;
     }
 
