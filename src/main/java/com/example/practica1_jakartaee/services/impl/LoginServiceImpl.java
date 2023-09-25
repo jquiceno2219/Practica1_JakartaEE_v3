@@ -18,14 +18,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     public Boolean verifyUserCookie(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getValue().equals("true")) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        Cookie[] cookies = req.getCookies() != null ? req.getCookies() : new Cookie[0];
+
+        Optional<Boolean> result = Arrays.stream(cookies)
+                .filter(cookie -> Boolean.parseBoolean(cookie.getValue()))
+                .map(cookie -> true)
+                .findFirst();
+
+        return result.orElse(false);
     }
 }

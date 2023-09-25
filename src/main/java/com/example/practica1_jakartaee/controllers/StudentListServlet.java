@@ -23,7 +23,7 @@ public class StudentListServlet extends HttpServlet {
         out.println("<head><title>Students List</title></head>");
         out.println("<body>");
 
-        if (authUser) {
+        if (authUser == true) {
             out.println("<h1>Students List</h1>");
             out.println("<ul>");
 
