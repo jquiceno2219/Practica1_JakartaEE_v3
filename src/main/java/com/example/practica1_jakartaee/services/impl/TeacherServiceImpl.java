@@ -1,17 +1,22 @@
 package com.example.practica1_jakartaee.services.impl;
 
+import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
-import com.example.practica1_jakartaee.repositories.impl.TeacherRepositoryLogicImpl;
+import com.example.practica1_jakartaee.repositories.Repository;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.TeacherRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.logic.TeacherRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.TeacherService;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
 
-    private final TeacherRepositoryLogicImpl repository;
+    private Repository<TeacherDto> repository;
 
-    public TeacherServiceImpl(TeacherRepositoryLogicImpl repository) {
-        this.repository = repository;
+    public TeacherServiceImpl(Connection connection) {
+        this.repository = new TeacherRepositoryJdbcImpl(connection);
     }
     @Override
     public List<TeacherDto> list() {

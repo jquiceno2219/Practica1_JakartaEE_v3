@@ -1,7 +1,8 @@
 package com.example.practica1_jakartaee.controllers;
 
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
-import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,17 +15,19 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.List;
 
 @WebServlet(name = "StudentJson", value = "/student.json")
 public class StudentJson extends HttpServlet {
 
-    private StudentRepositoryLogicImpl studentRepository;
+    private StudentRepositoryJdbcImpl studentRepository;
     private StudentService service;
+    private Connection conn;
 
     public StudentJson() {
-        studentRepository = new StudentRepositoryLogicImpl();
-        service = new StudentServiceImpl(studentRepository);
+        studentRepository = new StudentRepositoryJdbcImpl(conn);
+        service = new StudentServiceImpl(conn);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

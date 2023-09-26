@@ -2,10 +2,12 @@ package com.example.practica1_jakartaee.controllers;
 
 
 import java.io.*;
+import java.sql.Connection;
 
 import com.example.practica1_jakartaee.domain.enums.Career;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
-import com.example.practica1_jakartaee.repositories.impl.StudentRepositoryLogicImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
 import jakarta.servlet.ServletException;
@@ -15,15 +17,15 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "studentController", value = "/student-form")
 public class StudentController extends HttpServlet {
 
-    private StudentRepositoryLogicImpl studentRepository;
+    private StudentRepositoryJdbcImpl studentRepository;
     private StudentService service;
-
-    public StudentController() {
-        studentRepository = new StudentRepositoryLogicImpl();
-        service = new StudentServiceImpl(studentRepository);
-    }
-
     private String message;
+
+    private Connection conn;
+    public StudentController(){
+        studentRepository = new StudentRepositoryJdbcImpl(conn);
+        service = new StudentServiceImpl(conn);
+    }
 
     public void init() {
         message = "Hello World!";
@@ -31,6 +33,9 @@ public class StudentController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+        Connection conn = (Connection) request.getAttribute("conn");
+        studentRepository = new StudentRepositoryJdbcImpl(conn);
+        service = new StudentServiceImpl(conn);
 
         // Hello
         PrintWriter out = response.getWriter();
@@ -43,6 +48,9 @@ public class StudentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        Connection conn = (Connection) req.getAttribute("conn");
+        studentRepository = new StudentRepositoryJdbcImpl(conn);
+        service = new StudentServiceImpl(conn);
 
         String name = req.getParameter("name");
         String career = req.getParameter("career");

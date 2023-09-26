@@ -1,4 +1,4 @@
-package com.example.practica1_jakartaee.repositories.impl;
+package com.example.practica1_jakartaee.repositories.impl.logic;
 
 import com.example.practica1_jakartaee.exceptions.UniversityException;
 import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;

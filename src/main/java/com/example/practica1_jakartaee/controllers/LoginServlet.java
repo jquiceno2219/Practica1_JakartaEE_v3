@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
           Cookie usernameCookie = new Cookie("username", username);
             resp.addCookie(usernameCookie);
-            resp.sendRedirect(req.getContextPath() + "/login.html");
+            resp.sendRedirect(req.getContextPath() + "/login");
 
 
             resp.setContentType("text/html;charset=UTF-8");
@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
                 out.println(" <body>");
                 out.println(" <h1>Hola " + cookieOptional.get() + " has iniciado sesión con éxito!</h1>");
                 out.println("<p><a href='" + req.getContextPath() +
-                        "/index.html'>volver</a></p>");
+                        "/index.jsp'>volver</a></p>");
                 out.println("<p><a href='" + req.getContextPath() + "/logout'>cerrar sesión</a></p>");
                 out.println(" </body>");
                 out.println("</html>");

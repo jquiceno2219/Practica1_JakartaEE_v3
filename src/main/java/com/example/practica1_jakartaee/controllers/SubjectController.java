@@ -2,7 +2,9 @@ package com.example.practica1_jakartaee.controllers;
 
 import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
-import com.example.practica1_jakartaee.repositories.impl.SubjectRepositoryLogicImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.logic.SubjectRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.impl.SubjectServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,15 +14,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 
 @WebServlet(name = "subjectController", value = "/subject-form")
 public class SubjectController extends HttpServlet {
-    private SubjectRepositoryLogicImpl subjectRepository;
+    private SubjectRepositoryJdbcImpl subjectRepository;
     private SubjectServiceImpl service;
-
+    private Connection conn;
     public SubjectController() {
-        subjectRepository = new SubjectRepositoryLogicImpl();
-        service = new SubjectServiceImpl(subjectRepository);
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
     }
 
     private String message;
@@ -31,6 +34,9 @@ public class SubjectController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+        Connection conn = (Connection) request.getAttribute("conn");
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
 
         // Hello
         PrintWriter out = response.getWriter();
@@ -43,6 +49,9 @@ public class SubjectController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        Connection conn = (Connection) req.getAttribute("conn");
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
 
         String name = req.getParameter("name");
         SubjectDto subject = new SubjectDto(4L, name, new Teacher(5L,"Test", "Test@mail.com"));

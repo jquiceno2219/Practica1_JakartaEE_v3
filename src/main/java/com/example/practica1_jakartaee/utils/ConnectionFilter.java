@@ -33,6 +33,8 @@ operación de confirmación después de la ejecución de cada sentencia de SQL.
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
