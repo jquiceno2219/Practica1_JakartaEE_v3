@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "teacherController", value = "/teacher-form")
 public class TeacherController extends HttpServlet {
@@ -27,6 +29,7 @@ public class TeacherController extends HttpServlet {
         teacherRepository = new TeacherRepositoryJdbcImpl(connection);
         service = new TeacherServiceImpl(connection);
     }
+
     private String message;
 
     public void init() {
@@ -54,33 +57,57 @@ public class TeacherController extends HttpServlet {
         teacherRepository = new TeacherRepositoryJdbcImpl(connection);
         service = new TeacherServiceImpl(connection);
 
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
-        Teacher teacher = Teacher.builder()
+        String name = req.getParameter("teacher-name");
+        String email = req.getParameter("teacher-email");
+        TeacherDto teacher = TeacherDto.builder()
                 .name(name)
-                .email(email).build();
-        TeacherDto teacherDto = TeacherMapper.mapFrom(teacher);
-        service.save(teacherDto);
-        System.out.println(service.list());
+                .email(email)
+                .build();
 
-        try (PrintWriter out = resp.getWriter()) {
+        Map<String, String> errorsmap = getErrors(name, email);
 
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("    <head>");
-            out.println("        <meta charset=\"UTF-8\">");
-            out.println("        <title>Resultado form</title>");
-            out.println("    </head>");
-            out.println("    <body>");
-            out.println("        <h1>Resultado form!</h1>");
+        if (errorsmap.isEmpty()) {
+            service.save(teacher);
+            try (PrintWriter out = resp.getWriter()) {
 
-            out.println("        <ul>");
-            out.println("            <li>Name: " + name + "</li>");
-            out.println("            <li>Email: " + email + "</li>");
-            out.println("        </ul>");
-            out.println("    </body>");
-            out.println("</html>");
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("    <head>");
+                out.println("        <meta charset=\"UTF-8\">");
+                out.println("        <title>Resultado form</title>");
+                out.println("    </head>");
+                out.println("    <body>");
+                out.println("        <h1>Resultado form!</h1>");
+
+                out.println("        <ul>");
+                out.println("            <li>Name: " + name + "</li>");
+                out.println("            <li>Email: " + email + "</li>");
+                out.println("        </ul>");
+                out.println("        <p> lista: " + service.list() + "</p>");
+
+                out.println("    </body>");
+                out.println("</html>");
+            }
+        } else {
+/* errores.forEach(error -> {
+out.println("<li>" + error + "</li>");
+});
+out.println("<p><a href=\"/student.jsp\">volver</a></p>");*/
+            req.setAttribute("errorsmap", errorsmap);
+            getServletContext().getRequestDispatcher("/teacher.jsp").forward(req, resp);
         }
+    }
+
+    private Map<String, String> getErrors(String name, String email) {
+        Map<String, String> errors = new HashMap<>();
+        if (name == null || name.isBlank()) {
+            errors.put("name", "El nombre es requerido");
+        }
+        if (email == null || email.isBlank() || !email.contains("@")) {
+            errors.put("email", "El email no es verificable");
+        }
+
+        return errors;
     }
 
     public void destroy() {

@@ -71,16 +71,16 @@ public class SubjectRepositoryJdbcImpl implements Repository<SubjectDto> {
     @Override
     public void save(SubjectDto subject) {
         String sql;
-        if (subject.id() > 0 && subject.id() != null) {
+        if (subject.id() != null && subject.id() > 0) {
             sql = "UPDATE subject SET name=?, teacher_id = ? WHERE id=?";
         } else {
             sql = "INSERT INTO subject(name, teacher_id) VALUES(?, ?)";
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, subject.name());
-            stmt.setString(2, subject.teacher().getName());
+            stmt.setLong(2, subject.teacher().getId());
 
-            if (subject.id() > 0) {
+            if (subject.id() != null && subject.id() > 0) {
                 stmt.setLong(3, subject.id());
             }
 

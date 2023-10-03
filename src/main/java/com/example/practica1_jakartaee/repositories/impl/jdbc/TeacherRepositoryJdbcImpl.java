@@ -60,7 +60,7 @@ public class TeacherRepositoryJdbcImpl implements Repository<TeacherDto> {
     @Override
     public void save(TeacherDto teacher) {
         String sql;
-        if (teacher.id()>0 && teacher.id() != null) {
+        if (teacher.id() != null && teacher.id()>0) {
             sql = "UPDATE teachers SET name=?, email=? WHERE id=?";
         } else {
             sql = "INSERT INTO teachers(name, email) VALUES(?, ?)";
@@ -69,7 +69,7 @@ public class TeacherRepositoryJdbcImpl implements Repository<TeacherDto> {
             stmt.setString(1, teacher.name());
             stmt.setString(2, teacher.email());
 
-            if (teacher.id() > 0) {
+            if (teacher.id() != null && teacher.id()>0) {
                 stmt.setLong(3, teacher.id());
             }
 

@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.Map"%>
-<%@ page import="java.util.List" %>
 <%
     Map<String,String> errorsmap =
             (Map<String,String>)request.getAttribute("errorsmap");
@@ -15,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Student Add Form</title>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -48,7 +47,7 @@
         <label for="career" class="col-form-label col-sm-2">Career</label>
         <div class="col-sm-4">
             <select name="career" id="career" class="form-select">
-                <option value="">-- seleccionar --</option>
+                <option value="debug">-- seleccionar --</option>
                 <option value="Software" ${param.career.equals("SOFTWARE")? "selected":
                         ""}>Software</option>
                 <option value="Civil" ${param.pais.equals("CIVIL")? "selected":
@@ -60,9 +59,9 @@
             </select>
         </div>
         <%
-            if(errorsmap != null && errorsmap.containsKey("pais")){
+            if(errorsmap != null && errorsmap.containsValue("career")){
                 out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"
-                        + errorsmap.get("pais") + "</small>");
+                        + errorsmap.get("career") + "</small>");
             }
         %>
     </div>

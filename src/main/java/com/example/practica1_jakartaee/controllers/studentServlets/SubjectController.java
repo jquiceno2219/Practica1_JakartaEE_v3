@@ -2,6 +2,7 @@ package com.example.practica1_jakartaee.controllers.studentServlets;
 
 import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
+import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.logic.SubjectRepositoryLogicImpl;
@@ -54,9 +55,18 @@ public class SubjectController extends HttpServlet {
         service = new SubjectServiceImpl(conn);
 
         String name = req.getParameter("name");
-        SubjectDto subject = new SubjectDto(4L, name, new Teacher(5L,"Test", "Test@mail.com"));
+        String teacherName = req.getParameter("teacher-name");
+
+        //SubjectDto subject = new SubjectDto(4L, name, new Teacher(5L,"Test", "Test@mail.com"));
+        Teacher teacher = Teacher.builder()
+                .name(teacherName)
+                .build();
+
+        SubjectDto subject = SubjectDto.builder()
+                        .name(name)
+                .teacher(teacher)
+                .build();
         service.save(subject);
-        System.out.println(service.list());
 
         try (PrintWriter out = resp.getWriter()) {
 
@@ -72,6 +82,9 @@ public class SubjectController extends HttpServlet {
             out.println("        <ul>");
             out.println("            <li>Name: " + name + "</li>");
             out.println("        </ul>");
+
+            //            out.println("        <p> lista: " + service.list() + "</p>");
+
             out.println("    </body>");
             out.println("</html>");
         }
