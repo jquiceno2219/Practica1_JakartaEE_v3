@@ -98,6 +98,7 @@ out.println("<p><a href=\"/student.jsp\">volver</a></p>");*/
         }
     }
 
+    //Por fin aprendí a usar mapas :D creo :P
     private Map<String, String> getErrors(String name, String career) {
         Map<String, String> errors = new HashMap<>();
         if (name == null || name.isBlank()) {
