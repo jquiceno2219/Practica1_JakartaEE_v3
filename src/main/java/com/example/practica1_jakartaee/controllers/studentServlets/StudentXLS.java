@@ -1,4 +1,4 @@
-package com.example.practica1_jakartaee.controllers;
+package com.example.practica1_jakartaee.controllers.studentServlets;
 
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;

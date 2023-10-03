@@ -1,4 +1,4 @@
-package com.example.practica1_jakartaee.controllers;
+package com.example.practica1_jakartaee.controllers.studentServlets;
 
 import com.example.practica1_jakartaee.services.LoginService;
 import com.example.practica1_jakartaee.services.impl.LoginServiceImpl;

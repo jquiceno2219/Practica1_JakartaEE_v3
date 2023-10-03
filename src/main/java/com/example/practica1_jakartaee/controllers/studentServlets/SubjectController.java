@@ -1,31 +1,32 @@
-package com.example.practica1_jakartaee.controllers;
+package com.example.practica1_jakartaee.controllers.studentServlets;
 
+import com.example.practica1_jakartaee.domain.model.Teacher;
+import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.repositories.impl.logic.SubjectRepositoryLogicImpl;
+import com.example.practica1_jakartaee.services.impl.SubjectServiceImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
-import com.example.practica1_jakartaee.domain.enums.Career;
-import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
-import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
-import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepositoryLogicImpl;
-import com.example.practica1_jakartaee.services.StudentService;
-import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-
-@WebServlet(name = "studentController", value = "/student-form")
-public class StudentController extends HttpServlet {
-
-    private StudentRepositoryJdbcImpl studentRepository;
-    private StudentService service;
-    private String message;
-
+@WebServlet(name = "subjectController", value = "/subject-form")
+public class SubjectController extends HttpServlet {
+    private SubjectRepositoryJdbcImpl subjectRepository;
+    private SubjectServiceImpl service;
     private Connection conn;
-    public StudentController(){
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
+    public SubjectController() {
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
     }
+
+    private String message;
 
     public void init() {
         message = "Hello World!";
@@ -34,8 +35,8 @@ public class StudentController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         Connection conn = (Connection) request.getAttribute("conn");
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
 
         // Hello
         PrintWriter out = response.getWriter();
@@ -49,13 +50,12 @@ public class StudentController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         Connection conn = (Connection) req.getAttribute("conn");
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
+        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
+        service = new SubjectServiceImpl(conn);
 
         String name = req.getParameter("name");
-        String career = req.getParameter("career");
-        StudentDto student = new StudentDto(4L, name, "1",Career.fromValue(career));
-        service.save(student);
+        SubjectDto subject = new SubjectDto(4L, name, new Teacher(5L,"Test", "Test@mail.com"));
+        service.save(subject);
         System.out.println(service.list());
 
         try (PrintWriter out = resp.getWriter()) {
@@ -71,7 +71,6 @@ public class StudentController extends HttpServlet {
 
             out.println("        <ul>");
             out.println("            <li>Name: " + name + "</li>");
-            out.println("            <li>Career: " + career + "</li>");
             out.println("        </ul>");
             out.println("    </body>");
             out.println("</html>");

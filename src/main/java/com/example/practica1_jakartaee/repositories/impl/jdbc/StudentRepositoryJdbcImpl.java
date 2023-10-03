@@ -22,7 +22,7 @@ public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
     public List<StudentDto> list(){
         List<StudentDto> students = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT s.* order by s.id ASC")) {
+             ResultSet rs = stmt.executeQuery("SELECT s.* FROM students as s order by s.id ASC")) {
             while (rs.next()) {
                 StudentDto ps= createStudent(rs);
                 students.add(ps);
@@ -38,7 +38,7 @@ public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
         student.setId(rs.getLong("id"));
         student.setName(rs.getString("name"));
         student.setSemester(rs.getString("semester"));
-        student.setCareer(Career.valueOf(rs.getString("career")));
+        student.setCareer(Career.fromValue(rs.getString("career")));
         return StudentMapper.mapFrom(student);
     }
 
@@ -63,16 +63,17 @@ public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
         String sql;
 
         if (student.id() != null && student.id() > 0) {
-            sql = "UPDATE students SET name=?, semester=?, career=? WHERE id=?";
+            sql = "UPDATE students SET name=?, semester=?, email='test', career=? WHERE id=?";
         } else {
-            sql = "INSERT INTO student(name, semester, career) VALUES(?, ?, ?, ?)";
+            sql = "INSERT INTO students(name, semester, email, career) VALUES(?, ?,'test', ?)";
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, student.name());
             stmt.setString(2, student.semester());
-            stmt.setString(3, String.valueOf(student.career()));
+            stmt.setString(3, student.career().getValue());
+            //String.valueOf(student.career()) sirve para capturar como tal el nombre del ENUM.
 
-            if (student.id() > 0) {
+            if (student.id() != null && student.id() > 0) {
                 stmt.setLong(4, student.id());
             }
 
