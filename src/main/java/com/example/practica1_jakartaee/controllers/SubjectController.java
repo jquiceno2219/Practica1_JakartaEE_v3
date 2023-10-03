@@ -46,7 +46,7 @@ public class SubjectController extends HttpServlet {
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
-        out.println("<h1>Students</h1>");
+        out.println("<h1>Subjects</h1>");
         out.println(service.list());
         out.println("</body></html>");
     }

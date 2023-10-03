@@ -19,9 +19,16 @@
 
 <h2><%= "Teacher"%></h2>
 <a href="teacher.jsp">Vamos a teacherForm</a>
+
+<h2><%= "Grades"%></h2>
+<a href="grades.jsp">Vamos a gradesForm (no sirve aún)</a>
+
 <br/>
+
+<h2><%= "Otros"%></h2>
 <a href="login.jsp">Vamos a login</a>
 <br/>
 <a href="searchbyId.jsp">Ir a studentId</a>
+
 </body>
 </html>
