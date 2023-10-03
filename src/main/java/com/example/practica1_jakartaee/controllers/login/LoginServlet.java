@@ -1,7 +1,10 @@
 package com.example.practica1_jakartaee.controllers.login;
 
+import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.services.LoginService;
+import com.example.practica1_jakartaee.services.TeacherService;
 import com.example.practica1_jakartaee.services.impl.LoginServiceImpl;
+import com.example.practica1_jakartaee.services.impl.TeacherServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -11,6 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/login")
@@ -23,6 +28,10 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
+            Connection conn = (Connection) req.getAttribute("conn");
+            TeacherService service = new TeacherServiceImpl(conn);
+            List<TeacherDto> teacherDtoList = service.list();
+            getServletContext().setAttribute("teacherDtoList", teacherDtoList);
           Cookie usernameCookie = new Cookie("username", username);
             resp.addCookie(usernameCookie);
             resp.sendRedirect(req.getContextPath() + "/login");

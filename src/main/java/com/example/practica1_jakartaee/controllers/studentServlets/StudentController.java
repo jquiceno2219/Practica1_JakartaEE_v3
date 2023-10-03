@@ -63,9 +63,9 @@ public class StudentController extends HttpServlet {
                 .build();
 
         Map<String, String> errorsmap = getErrors(name, career);
-        service.save(student);
 
         if (errorsmap.isEmpty()) {
+            service.save(student);
             try (PrintWriter out = resp.getWriter()) {
 
                 out.println("<!DOCTYPE html>");

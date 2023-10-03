@@ -8,6 +8,7 @@
 <h1><%= "¡Bienvenidos!" %>
 </h1>
 <br/>
+<a href="login.jsp">Login</a><br/>
 <h2><%= "Estudiantes"%></h2>
 <a href="hello-servlet">Hello Estudiantes</a><br/>
 <a href="student.jsp">Vamos a StudentForm</a><br/>
