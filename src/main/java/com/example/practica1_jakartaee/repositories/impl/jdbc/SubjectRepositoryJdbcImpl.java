@@ -24,8 +24,8 @@ public class SubjectRepositoryJdbcImpl implements Repository<SubjectDto> {
         subject.setId(rs.getLong("id"));
         subject.setName(rs.getString("name"));
         Teacher teacher = new Teacher();
-        teacher.setId(rs.getLong("id"));
-        teacher.setName(rs.getString("name"));
+        teacher.setId(rs.getLong("teacherId"));
+        teacher.setName(rs.getString("teacherName"));
         teacher.setEmail(rs.getString("email"));
         subject.setTeacher(teacher);
 
@@ -38,7 +38,7 @@ public class SubjectRepositoryJdbcImpl implements Repository<SubjectDto> {
         List<Subject> subjectList = new ArrayList<>();
         try (Statement statement = conn.createStatement();
              ResultSet resultSet = statement.executeQuery(
-                     "SELECT subject.name as 'Subject', teachers.name as 'Teacher', teachers.email " +
+                     "SELECT subject.*, teachers.name as 'teacherName', teachers.email ,teachers.id as 'teacherId'" +
                              "FROM subject INNER JOIN teachers ON subject.teacher_id=teachers.id")) {
             while (resultSet.next()) {
                 Subject subject = createSubject(resultSet);

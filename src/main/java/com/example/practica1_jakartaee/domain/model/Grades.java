@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Grades {
-    private long id;
+    private Long id;
     private Student student;
     private Subject subject;
     private double grade;

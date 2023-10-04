@@ -21,7 +21,7 @@
 <a href="teacher.jsp">Vamos a teacherForm</a>
 
 <h2><%= "Grades"%></h2>
-<a href="grades.jsp">Vamos a gradesForm (no sirve aún)</a>
+<a href="grades.jsp">Vamos a gradesForm (ahora si funciona)</a>
 
 <br/>
 

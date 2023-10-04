@@ -78,17 +78,19 @@ public class GradesRepositoryJdbcImpl implements Repository<GradesDto> {
     @Override
     public void save(GradesDto grades) {
         String sql;
-        if (grades.id() > 0) {
+        if (grades.id() != null && grades.id() > 0) {
             sql = "UPDATE grades SET student_id=?, subject_id=?, grade=?, term=? WHERE id=?";
         } else {
             sql = "INSERT INTO grades(student_id, subject_id, grade, term) VALUES(?, ?, ?, ?)";
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, grades.id());
+            stmt.setLong(1, grades.student().getId());
             stmt.setLong(2, grades.subject().getId());
+            stmt.setDouble(3, grades.grade());
+            stmt.setString(4, grades.term());
 
-            if (grades.id() > 0) {
-                stmt.setLong(3, grades.id());
+            if (grades.id() != null && grades.id() > 0) {
+                stmt.setLong(5, grades.id());
             }
 
             stmt.executeUpdate();
