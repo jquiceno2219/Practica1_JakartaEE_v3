@@ -1,23 +1,26 @@
 package com.example.practica1_jakartaee.repositories.impl.jdbc;
 
+import com.example.practica1_jakartaee.annotations.MysqlConn;
 import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
 import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.mapping.mappers.TeacherMapper;
 import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.utils.ConexionBaseDatos;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestScoped
+@Named("teacherRepo")
 public class TeacherRepositoryJdbcImpl implements Repository<TeacherDto> {
-
+    @Inject
+    @MysqlConn
     private Connection conn;
-    public TeacherRepositoryJdbcImpl(Connection conn) {
-        this.conn = conn;
-    }
-
 
     private TeacherDto createTeacher(ResultSet resultSet) throws SQLException {
         Teacher teachers = new Teacher();

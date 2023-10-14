@@ -8,15 +8,17 @@ import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJ
 import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.logic.SubjectRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.SubjectService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.Connection;
 import java.util.List;
-
+@ApplicationScoped
 public class SubjectServiceImpl implements SubjectService {
+    @Inject
+    @Named("subjectRepo")
     private Repository<SubjectDto> repository;
-    public SubjectServiceImpl(Connection connection) {
-        this.repository = new SubjectRepositoryJdbcImpl(connection);
-    }
     @Override
     public List<SubjectDto> list() {
         return repository.list();

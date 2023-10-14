@@ -5,6 +5,7 @@ import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJ
 import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,19 +20,13 @@ import java.util.List;
 @WebServlet({"/students.xls", "/students.html", "/students"})
 public class StudentXLS extends HttpServlet {
 
-    private StudentRepositoryJdbcImpl studentRepository;
-    private StudentService service;
-    private Connection conn;
-
-    public StudentXLS() {
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
-    }
+    @Inject
+    StudentService studentService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-        List<StudentDto> students = service.list();
+        List<StudentDto> students = studentService.list();
         resp.setContentType("text/html;charset=UTF-8");
         String servletPath = req.getServletPath();
         boolean esXls = servletPath.endsWith(".xls");

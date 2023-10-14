@@ -5,9 +5,11 @@ import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.mapping.mappers.TeacherMapper;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
+import com.example.practica1_jakartaee.services.SubjectService;
 import com.example.practica1_jakartaee.services.TeacherService;
 import com.example.practica1_jakartaee.services.impl.SubjectServiceImpl;
 import com.example.practica1_jakartaee.services.impl.TeacherServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,14 +25,8 @@ import java.util.Map;
 
 @WebServlet(name = "subjectController", value = "/subject-form")
 public class SubjectController extends HttpServlet {
-    private SubjectRepositoryJdbcImpl subjectRepository;
-    private SubjectServiceImpl service;
-    private Connection conn;
-    public SubjectController() {
-        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
-        service = new SubjectServiceImpl(conn);
-    }
-
+    @Inject
+    SubjectService subjectService;
     private String message;
 
     public void init() {
@@ -39,25 +35,21 @@ public class SubjectController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Connection conn = (Connection) request.getAttribute("conn");
-        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
-        service = new SubjectServiceImpl(conn);
+//        Connection conn = (Connection) request.getAttribute("conn");
+
 
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Subjects</h1>");
-        out.println(service.list());
+        out.println(subjectService.list());
         out.println("</body></html>");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        Connection conn = (Connection) req.getAttribute("conn");
-        subjectRepository = new SubjectRepositoryJdbcImpl(conn);
-        service = new SubjectServiceImpl(conn);
-        TeacherService teacherService = new TeacherServiceImpl(conn);
+//        Connection conn = (Connection) req.getAttribute("conn");
 
         String name = req.getParameter("name");
         String teacherName = req.getParameter("teacher-name");
@@ -78,7 +70,7 @@ public class SubjectController extends HttpServlet {
         Map<String, String> errorsmap = getErrors(name, teacherName);
 
         if (errorsmap.isEmpty()) {
-            service.save(subject);
+            subjectService.save(subject);
             try (PrintWriter out = resp.getWriter()) {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");

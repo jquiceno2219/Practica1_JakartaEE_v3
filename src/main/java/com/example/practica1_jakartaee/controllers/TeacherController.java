@@ -6,7 +6,9 @@ import com.example.practica1_jakartaee.mapping.dtos.TeacherDto;
 import com.example.practica1_jakartaee.mapping.mappers.TeacherMapper;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.TeacherRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.logic.TeacherRepositoryLogicImpl;
+import com.example.practica1_jakartaee.services.TeacherService;
 import com.example.practica1_jakartaee.services.impl.TeacherServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,13 +24,9 @@ import java.util.Map;
 @WebServlet(name = "teacherController", value = "/teacher-form")
 public class TeacherController extends HttpServlet {
     private TeacherRepositoryJdbcImpl teacherRepository;
-    private TeacherServiceImpl service;
-    private Connection connection;
+    @Inject
+    TeacherService service;
 
-    public TeacherController() {
-        teacherRepository = new TeacherRepositoryJdbcImpl(connection);
-        service = new TeacherServiceImpl(connection);
-    }
 
     private String message;
 
@@ -38,9 +36,7 @@ public class TeacherController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Connection connection = (Connection) request.getAttribute("conn");
-        teacherRepository = new TeacherRepositoryJdbcImpl(connection);
-        service = new TeacherServiceImpl(connection);
+       // Connection connection = (Connection) request.getAttribute("conn");
 
         // Hello
         PrintWriter out = response.getWriter();
@@ -53,9 +49,7 @@ public class TeacherController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        Connection connection = (Connection) req.getAttribute("conn");
-        teacherRepository = new TeacherRepositoryJdbcImpl(connection);
-        service = new TeacherServiceImpl(connection);
+//        Connection connection = (Connection) req.getAttribute("conn");
 
         String name = req.getParameter("teacher-name");
         String email = req.getParameter("teacher-email");

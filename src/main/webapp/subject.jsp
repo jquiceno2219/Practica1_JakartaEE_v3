@@ -54,7 +54,7 @@
             if(teachers != null && !teachers.isEmpty()){
         %>
         <label for="teacher-name" class="col-form-label col-sm-2">Teacher</label>
-        <select id="teacher-name" name="teacher-name" class="form-select">
+        <select id="teacher-name" name="teacher-name" class="form-select" style="width: 200px;">
             <% for(TeacherDto var: teachers){%>
             <option><%=var.name()%></option>
             <%}%>
@@ -64,7 +64,7 @@
 
     <div class="row mb-3">
         <div>
-            <input type="submit" value="Enviar" class="btn btn-primary">
+            <input type="submit" value="Enviar" class="btn btn-outline-primary">
         </div>
     </div>
     <br/>

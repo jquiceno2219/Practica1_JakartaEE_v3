@@ -4,16 +4,19 @@ import com.example.practica1_jakartaee.mapping.dtos.GradesDto;
 import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.GradesRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.services.GradesService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.Connection;
 import java.util.List;
 
+@ApplicationScoped
 public class GradesServiceImpl implements GradesService {
+    @Inject
+    @Named("gradeRepo")
     private Repository<GradesDto> repository;
 
-    public GradesServiceImpl(Connection connection){
-        this.repository = new GradesRepositoryJdbcImpl(connection);
-    }
     @Override
     public List<GradesDto> list() {
         return repository.list();

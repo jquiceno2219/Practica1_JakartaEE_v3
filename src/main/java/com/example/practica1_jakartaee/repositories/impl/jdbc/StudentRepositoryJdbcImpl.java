@@ -1,4 +1,5 @@
 package com.example.practica1_jakartaee.repositories.impl.jdbc;
+import com.example.practica1_jakartaee.annotations.MysqlConn;
 import com.example.practica1_jakartaee.domain.enums.Career;
 import com.example.practica1_jakartaee.domain.model.Student;
 import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
@@ -6,17 +7,20 @@ import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.mapping.mappers.StudentMapper;
 import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.utils.ConexionBaseDatos;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@RequestScoped
+@Named("studentRepo")
 public class StudentRepositoryJdbcImpl implements Repository<StudentDto> {
+    @Inject
+    @MysqlConn
     private Connection conn;
-    public StudentRepositoryJdbcImpl(Connection conn) {
-        this.conn = conn;
-    }
 
     @Override
     public List<StudentDto> list(){

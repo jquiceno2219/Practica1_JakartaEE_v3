@@ -1,5 +1,6 @@
 package com.example.practica1_jakartaee.repositories.impl.jdbc;
 
+import com.example.practica1_jakartaee.annotations.MysqlConn;
 import com.example.practica1_jakartaee.domain.model.Subject;
 import com.example.practica1_jakartaee.domain.model.Teacher;
 import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
@@ -7,17 +8,20 @@ import com.example.practica1_jakartaee.mapping.dtos.SubjectDto;
 import com.example.practica1_jakartaee.mapping.mappers.SubjectMapper;
 import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.utils.ConexionBaseDatos;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestScoped
+@Named("subjectRepo")
 public class SubjectRepositoryJdbcImpl implements Repository<SubjectDto> {
-
+    @Inject
+    @MysqlConn
     private Connection conn;
-    public SubjectRepositoryJdbcImpl(Connection conn) {
-        this.conn = conn;
-    }
 
     private Subject createSubject(ResultSet rs) throws SQLException {
         Subject subject = new Subject();

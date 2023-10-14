@@ -5,16 +5,18 @@ import com.example.practica1_jakartaee.repositories.Repository;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.StudentService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.Connection;
 import java.util.List;
+@ApplicationScoped
 public class StudentServiceImpl implements StudentService {
-
+    @Inject
+    @Named("studentRepo")
     private Repository<StudentDto> repository;
 
-    public StudentServiceImpl(Connection connection) {
-        this.repository = new StudentRepositoryJdbcImpl(connection);
-    }
     @Override
     public List<StudentDto> list() {
         return repository.list();

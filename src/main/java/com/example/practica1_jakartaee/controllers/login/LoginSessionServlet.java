@@ -2,6 +2,9 @@ package com.example.practica1_jakartaee.controllers.login;
 
 import com.example.practica1_jakartaee.services.LoginService;
 import com.example.practica1_jakartaee.services.impl.LoginServiceSessionImpl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +20,10 @@ import java.util.Optional;
 public class LoginSessionServlet extends HttpServlet {
     final static String USERNAME = "admin";
     final static String PASSWORD = "12345";
+
+    @Inject
+    @Named("loginSession")
+    LoginService auth;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +42,6 @@ public class LoginSessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
-        LoginService auth = new LoginServiceSessionImpl();
         Optional<String> usernameOptional = auth.getUsername(req);
         String mensajeRequest = (String) req.getAttribute("mensaje");
         String mensajeApp = (String) getServletContext().getAttribute("mensaje");

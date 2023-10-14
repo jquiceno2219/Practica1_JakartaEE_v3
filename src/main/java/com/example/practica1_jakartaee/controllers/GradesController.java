@@ -11,10 +11,12 @@ import com.example.practica1_jakartaee.mapping.mappers.SubjectMapper;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.GradesRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.SubjectRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.services.GradesService;
+import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.TeacherService;
 import com.example.practica1_jakartaee.services.impl.GradesServiceImpl;
 import com.example.practica1_jakartaee.services.impl.SubjectServiceImpl;
 import com.example.practica1_jakartaee.services.impl.TeacherServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,13 +33,8 @@ import java.util.Map;
 @WebServlet(value="/grades-form")
 public class GradesController extends HttpServlet {
     private GradesRepositoryJdbcImpl gradesRep;
-    private GradesServiceImpl service;
-    private Connection conn;
-
-    public GradesController() {
-        gradesRep = new GradesRepositoryJdbcImpl(conn);
-        service = new GradesServiceImpl(conn);
-    }
+    @Inject
+    GradesService gradesService;
 
     private String message;
 
@@ -47,25 +44,20 @@ public class GradesController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Connection conn = (Connection) request.getAttribute("conn");
-        gradesRep = new GradesRepositoryJdbcImpl(conn);
-        service = new GradesServiceImpl(conn);
+        // Connection conn = (Connection) request.getAttribute("conn");
 
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Grades</h1>");
-        out.println(service.list());
+        out.println(gradesService.list());
         out.println("</body></html>");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        Connection conn = (Connection) req.getAttribute("conn");
-        gradesRep = new GradesRepositoryJdbcImpl(conn);
-        service = new GradesServiceImpl(conn);
-        GradesService gradesService = new GradesServiceImpl(conn);
+        //Connection conn = (Connection) req.getAttribute("conn");
 
         String gradeName = req.getParameter("grade");
         double grade = Double.parseDouble(gradeName);
@@ -91,7 +83,7 @@ public class GradesController extends HttpServlet {
 
 
         if (errorsmap.isEmpty()) {
-            service.save(grades);
+            gradesService.save(grades);
             try (PrintWriter out = resp.getWriter()) {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");

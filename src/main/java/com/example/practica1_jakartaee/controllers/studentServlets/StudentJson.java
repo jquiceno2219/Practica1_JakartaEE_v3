@@ -6,6 +6,7 @@ import com.example.practica1_jakartaee.repositories.impl.logic.StudentRepository
 import com.example.practica1_jakartaee.services.StudentService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,14 +22,8 @@ import java.util.List;
 @WebServlet(name = "StudentJson", value = "/student.json")
 public class StudentJson extends HttpServlet {
 
-    private StudentRepositoryJdbcImpl studentRepository;
-    private StudentService service;
-    private Connection conn;
-
-    public StudentJson() {
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
-    }
+    @Inject
+    StudentService studentService;
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -59,7 +54,7 @@ public class StudentJson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-        List<StudentDto> students = service.list();
+        List<StudentDto> students = studentService.list();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(students);
         resp.setContentType("application/json");

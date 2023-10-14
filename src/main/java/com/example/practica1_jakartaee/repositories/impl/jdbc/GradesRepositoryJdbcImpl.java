@@ -1,5 +1,6 @@
 package com.example.practica1_jakartaee.repositories.impl.jdbc;
 
+import com.example.practica1_jakartaee.annotations.MysqlConn;
 import com.example.practica1_jakartaee.domain.model.Grades;
 import com.example.practica1_jakartaee.domain.model.Student;
 import com.example.practica1_jakartaee.domain.model.Subject;
@@ -7,16 +8,19 @@ import com.example.practica1_jakartaee.exceptions.ServiceJdbcException;
 import com.example.practica1_jakartaee.mapping.dtos.GradesDto;
 import com.example.practica1_jakartaee.mapping.mappers.GradesMapper;
 import com.example.practica1_jakartaee.repositories.Repository;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@RequestScoped
+@Named("gradeRepo")
 public class GradesRepositoryJdbcImpl implements Repository<GradesDto> {
+    @Inject
+    @MysqlConn
     private Connection conn;
-    public GradesRepositoryJdbcImpl(Connection conn) {
-        this.conn = conn;
-    }
 
     private GradesDto createGrades(ResultSet resultSet) throws
             SQLException {

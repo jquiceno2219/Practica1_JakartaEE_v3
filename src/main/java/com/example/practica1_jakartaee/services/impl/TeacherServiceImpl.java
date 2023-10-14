@@ -7,17 +7,17 @@ import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJ
 import com.example.practica1_jakartaee.repositories.impl.jdbc.TeacherRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.repositories.impl.logic.TeacherRepositoryLogicImpl;
 import com.example.practica1_jakartaee.services.TeacherService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.Connection;
 import java.util.List;
-
+@ApplicationScoped
 public class TeacherServiceImpl implements TeacherService {
-
+    @Inject
+    @Named("teacherRepo")
     private Repository<TeacherDto> repository;
-
-    public TeacherServiceImpl(Connection connection) {
-        this.repository = new TeacherRepositoryJdbcImpl(connection);
-    }
     @Override
     public List<TeacherDto> list() {
         return repository.list();

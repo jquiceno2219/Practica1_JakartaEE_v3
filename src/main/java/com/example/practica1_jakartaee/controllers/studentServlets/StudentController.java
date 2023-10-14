@@ -10,7 +10,9 @@ import com.example.practica1_jakartaee.domain.enums.Career;
 import com.example.practica1_jakartaee.mapping.dtos.StudentDto;
 import com.example.practica1_jakartaee.repositories.impl.jdbc.StudentRepositoryJdbcImpl;
 import com.example.practica1_jakartaee.services.StudentService;
+import com.example.practica1_jakartaee.services.TeacherService;
 import com.example.practica1_jakartaee.services.impl.StudentServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -18,16 +20,10 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "studentController", value = "/student-form")
 public class StudentController extends HttpServlet {
 
-    private StudentRepositoryJdbcImpl studentRepository;
-    private StudentService service;
     private String message;
 
-    private Connection conn;
-
-    public StudentController() {
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
-    }
+    @Inject
+    StudentService studentService;
 
     public void init() {
         message = "Hello World!";
@@ -35,15 +31,13 @@ public class StudentController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Connection conn = (Connection) request.getAttribute("conn");
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
+       // Connection conn = (Connection) request.getAttribute("conn");
 
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Students</h1>");
-        out.println(service.list());
+        out.println(studentService.list());
         out.println("</body></html>");
     }
 
@@ -51,8 +45,6 @@ public class StudentController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         Connection conn = (Connection) req.getAttribute("conn");
-        studentRepository = new StudentRepositoryJdbcImpl(conn);
-        service = new StudentServiceImpl(conn);
 
         String name = req.getParameter("name");
         String career = req.getParameter("career");
@@ -65,7 +57,7 @@ public class StudentController extends HttpServlet {
         Map<String, String> errorsmap = getErrors(name, career);
 
         if (errorsmap.isEmpty()) {
-            service.save(student);
+            studentService.save(student);
             try (PrintWriter out = resp.getWriter()) {
 
                 out.println("<!DOCTYPE html>");
@@ -82,7 +74,7 @@ public class StudentController extends HttpServlet {
                 out.println("            <li>Career: " + career + "</li>");
                 out.println("        </ul>");
 
-                out.println("        <p> lista: " + service.list() + "</p>");
+                out.println("        <p> lista: " + studentService.list() + "</p>");
 
                 out.println("    </body>");
                 out.println("</html>");

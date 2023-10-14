@@ -2,6 +2,8 @@ package com.example.practica1_jakartaee.controllers.studentServlets;
 
 import com.example.practica1_jakartaee.services.LoginService;
 import com.example.practica1_jakartaee.services.impl.LoginServiceImpl;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,8 +14,11 @@ import java.io.PrintWriter;
 
 @WebServlet("/student-list")
 public class StudentListServlet extends HttpServlet {
+
+    @Inject
+    @Named("login")
+    LoginService auth;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginService auth = new LoginServiceImpl();
         Boolean authUser = auth.verifyUserCookie(request);
 
         response.setContentType("text/html");
