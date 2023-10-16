@@ -115,7 +115,8 @@ out.println("<p><a href=\"/student.jsp\">volver</a></p>");*/
     }
 
     private SubjectDto getSubjectbyName(String subject) {
-        List<SubjectDto> subjectDto = (List<SubjectDto>)getServletContext().getAttribute("subjectDtoList");
+        List<SubjectDto> subjectDto = (List<SubjectDto>)getServletContext()
+                .getAttribute("subjectDtoList");
         return subjectDto.stream()
                 .filter(e->e.name().equalsIgnoreCase(subject))
                 .findFirst()
@@ -123,7 +124,8 @@ out.println("<p><a href=\"/student.jsp\">volver</a></p>");*/
     }
 
     private StudentDto getStudentByName(String student) {
-        List<StudentDto> studentDto = (List<StudentDto>)getServletContext().getAttribute("studentDtoList");
+        List<StudentDto> studentDto = (List<StudentDto>)getServletContext()
+                .getAttribute("studentDtoList");
         return studentDto.stream()
                 .filter(e->e.name().equalsIgnoreCase(student))
                 .findFirst()

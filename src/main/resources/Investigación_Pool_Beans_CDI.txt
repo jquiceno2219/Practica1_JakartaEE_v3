@@ -1,0 +1,37 @@
+=== POOL DE CONEXIONES ===
+pool.setInitialSize(3);
+	Configura el número de conexiones que se establecerán cuando se inicie el pool de conexiones.
+	El valor predeterminado es 10. En este caso, se configura a 3.
+pool.setMinIdle(3);
+	El número mínimo de conexiones establecidas que se deben mantener en el pool en todo momento.
+	En este caso, 3.
+pool.setMaxIdle(8);
+	El número máximo de conexiones estable
+cidas que se deben mantener en el pool al mismo tiempo
+	en todo momento. En este caso, 8.
+
+=== ANOTACIONES DE BEANS ===
+@Dependent
+	Es el scope default para los beans sin anotar. Especifica que el bean es dependiente al componente que inyecta.
+@RequestScoped
+	Epecifica que el alcance del bean depende de la request HTTP.
+@SessionScoped
+	Especifica que el bean se mantiene activo mientras hayan sesiones HTTP activas.
+@ConversationScoped
+	Especifica que el alcance del bean describe la interacción de un usuario con una aplicación JavaServer Faces.
+@ApplicationScoped
+	Especifica que el bean persiste mientras la aplicación esté corriendo o activa.
+
+=== META-ANOTACIONES ===
+Sirven para proporcionar metadatos a una anotación definida por el usuario, por lo que ayudan al compilador a
+aplicar las características requeridas.
+@Retention
+	Retention determina en que momento se descarta una anotación. Hay 3 tipos: source,class y runtime.
+	Las anotaciones RetentionPolicy.SOURCE se descartan al ejecutar la aplicación.
+	Las anotaciones RetentionPolicy.CLASS son las anotaciones por defecto. Se guardan en el archivo .class y se descartan al ejecutar.
+	Las anotaciones RetentionPolicy.RUNTIME se retienen y son accesibles en cualquier momento durante la ejecución.
+@Target (https://www.tutorialspoint.com/java-target-annotations)
+	Target recibe n parámetros de un array de valores (definidos en la página arriba) y define los tipos de elementos
+	a los que la anotación es aplicable (ej. método, constructor, variable local)
+@Qualifier
+	Permite diferenciar entre las distintas implementaciones de un mismo tipo de bean elegible para inyectar.
